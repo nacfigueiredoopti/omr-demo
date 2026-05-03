@@ -4,7 +4,7 @@ export default function RegistrationCta() {
   const { variables } = useFlag('express_registration_flow', {
     enabled: false,
     steps: 2,
-    sso_providers: ['linkedin', 'google'],
+    sso_providers: { providers: ['linkedin', 'google'] },
     require_company: true,
   })
 
@@ -13,8 +13,13 @@ export default function RegistrationCta() {
     try {
       providers = JSON.parse(providers)
     } catch {
-      providers = []
+      providers = {}
     }
+  }
+  if (providers && Array.isArray(providers.providers)) {
+    providers = providers.providers
+  } else if (!Array.isArray(providers)) {
+    providers = []
   }
 
   const flowLabel = variables.enabled
