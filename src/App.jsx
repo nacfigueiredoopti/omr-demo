@@ -13,6 +13,7 @@ import Footer from './components/Footer'
 import AiAssistant from './components/AiAssistant'
 import LivestreamBanner from './components/LivestreamBanner'
 import RegistrationCta from './components/RegistrationCta'
+import PricingTiers from './components/PricingTiers'
 import './App.css'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <LivestreamBanner />
         <main>
           <Hero />
+          <PricingTiers />
           <FestivalPillars />
           <Speakers />
           <Partners />

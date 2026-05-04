@@ -1047,3 +1047,136 @@ main { display: block; }
   .reg-cta-actions { align-items: start; }
   .sso-row { justify-content: start; }
 }
+
+/* ===== Pricing Tiers (under hero) ===== */
+.pricing-tiers-section {
+  padding: 72px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.pricing-tiers-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+.pricing-tiers-head h2 {
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.05;
+  margin-bottom: 12px;
+}
+.pricing-tiers-head p {
+  color: var(--ink-soft);
+  font-size: 16px;
+}
+.pricing-tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+.pricing-tier {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pricing-tier:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px rgba(0,0,0,0.18);
+}
+.pricing-tier.highlighted {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+  transform: scale(1.03);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.35);
+}
+.pricing-tier-badge {
+  position: absolute;
+  top: -10px;
+  left: 32px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.pricing-tier-name {
+  font-size: 22px;
+  font-weight: 800;
+}
+.pricing-tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.pricing-tier.highlighted .pricing-tier-price {
+  border-bottom-color: rgba(255,255,255,0.15);
+}
+.pricing-tier-symbol {
+  font-size: 22px;
+  font-weight: 700;
+}
+.pricing-tier-amount {
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.pricing-tier-suffix {
+  font-size: 14px;
+  color: var(--muted);
+  margin-left: 4px;
+}
+.pricing-tier.highlighted .pricing-tier-suffix {
+  color: rgba(255,255,255,0.6);
+}
+.pricing-tier-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.pricing-tier-features li {
+  font-size: 14px;
+  padding-left: 24px;
+  position: relative;
+  color: var(--ink-soft);
+}
+.pricing-tier.highlighted .pricing-tier-features li {
+  color: rgba(255,255,255,0.85);
+}
+.pricing-tier-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+.pricing-tier-cta {
+  margin-top: 8px;
+  justify-content: center;
+}
+.pricing-tier.highlighted .btn-dark {
+  background: #fff;
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .pricing-tiers-grid { grid-template-columns: 1fr; }
+  .pricing-tier.highlighted { transform: none; }
+}
