@@ -6,7 +6,7 @@ export const optimizely = createInstance({
   sdkKey: sdkKey || 'placeholder-no-sdk-key-set',
   datafileOptions: {
     autoUpdate: true,
-    updateInterval: 60_000,
+    updateInterval: 1_000,
   },
 })
 

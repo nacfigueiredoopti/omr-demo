@@ -1,7 +1,7 @@
 import { useDecision } from '@optimizely/react-sdk'
 
 export function useFlag(flagKey, defaults = {}) {
-  const [decision, clientReady] = useDecision(flagKey)
+  const [decision, clientReady] = useDecision(flagKey, { autoUpdate: true })
   const variables = decision?.variables ?? {}
   const merged = { ...defaults }
   for (const key of Object.keys(defaults)) {
