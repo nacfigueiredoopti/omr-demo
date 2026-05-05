@@ -2,15 +2,14 @@ import { useState } from 'react'
 import { useFlag } from '../useFlag'
 
 export default function AiAssistant() {
-  const { variables } = useFlag('ai_content_assistant', {
-    enabled: false,
+  const { enabled, variables } = useFlag('ai_content_assistant', {
     model: 'gpt-4o-mini',
     greeting: 'Hi! Looking for a session, speaker, or partner?',
     max_tokens: 512,
   })
   const [open, setOpen] = useState(false)
 
-  if (!variables.enabled) return null
+  if (!enabled) return null
 
   return (
     <>

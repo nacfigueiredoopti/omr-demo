@@ -8,8 +8,7 @@ const STAGE_LABELS = {
 }
 
 export default function LivestreamBanner() {
-  const { variables } = useFlag('stage_livestream', {
-    enabled: false,
+  const { enabled, variables } = useFlag('stage_livestream', {
     default_quality: 'auto',
     adaptive_bitrate: true,
     stages_config: {
@@ -20,7 +19,7 @@ export default function LivestreamBanner() {
     },
   })
 
-  if (!variables.enabled) return null
+  if (!enabled) return null
 
   let stages = variables.stages_config
   if (typeof stages === 'string') {

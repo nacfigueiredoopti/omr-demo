@@ -47,8 +47,7 @@ const FALLBACK_TIERS = {
 }
 
 export default function PricingTiers() {
-  const { variables } = useFlag('hero_pricing_tiers', {
-    enabled: true,
+  const { enabled, variables } = useFlag('hero_pricing_tiers', {
     headline: 'Pick your OMR26 pass.',
     subhead:
       'Two days of speakers, masterclasses, networking, and the after-parties Hamburg is famous for.',
@@ -57,7 +56,7 @@ export default function PricingTiers() {
     tiers: FALLBACK_TIERS,
   })
 
-  if (!variables.enabled) return null
+  if (!enabled) return null
 
   let tiersValue = variables.tiers
   if (typeof tiersValue === 'string') {

@@ -1,8 +1,7 @@
 import { useFlag } from '../useFlag'
 
 export default function RegistrationCta() {
-  const { variables } = useFlag('express_registration_flow', {
-    enabled: false,
+  const { enabled, variables } = useFlag('express_registration_flow', {
     steps: 2,
     sso_providers: { providers: ['linkedin', 'google'] },
     require_company: true,
@@ -22,7 +21,7 @@ export default function RegistrationCta() {
     providers = []
   }
 
-  const flowLabel = variables.enabled
+  const flowLabel = enabled
     ? `${variables.steps}-step express signup`
     : 'Classic registration'
 
@@ -39,7 +38,7 @@ export default function RegistrationCta() {
         </div>
         <div className="reg-cta-actions">
           <button className="btn btn-accent">Register now →</button>
-          {variables.enabled && Array.isArray(providers) && providers.length > 0 && (
+          {enabled && Array.isArray(providers) && providers.length > 0 && (
             <div className="sso-row">
               <span>or sign up with</span>
               {providers.map((p) => (
