@@ -33,13 +33,7 @@ export default function Hero() {
     return () => clearInterval(id)
   }, [])
 
-  const phaseHeadline =
-    t.phase === 'live'
-      ? 'The OMR Festival is live in Hamburg.'
-      : t.phase === 'ended'
-        ? 'OMR26 is a wrap. See you at OMR27.'
-        : variables.headline
-  const headlineWords = phaseHeadline.split(' ')
+  const headlineWords = variables.headline.split(' ')
   const lastWord = headlineWords.pop()
   const headlineLead = headlineWords.join(' ')
 
