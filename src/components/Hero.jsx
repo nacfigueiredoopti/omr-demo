@@ -2,20 +2,25 @@ import { useEffect, useState } from 'react'
 import { useFlag } from '../useFlag'
 import TicketPricing from './TicketPricing'
 
-const FESTIVAL_DATE = new Date('2026-05-05T09:00:00')
+const FESTIVAL_START = new Date('2026-05-05T09:00:00')
+const FESTIVAL_END = new Date('2026-05-06T18:00:00')
 
-function getRemaining() {
+function getStatus() {
   const now = new Date()
-  const diff = Math.max(0, FESTIVAL_DATE - now)
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
-  const minutes = Math.floor((diff / (1000 * 60)) % 60)
-  const seconds = Math.floor((diff / 1000) % 60)
-  return { days, hours, minutes, seconds }
+  if (now >= FESTIVAL_END) return { phase: 'ended' }
+  if (now >= FESTIVAL_START) return { phase: 'live' }
+  const diff = FESTIVAL_START - now
+  return {
+    phase: 'upcoming',
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  }
 }
 
 export default function Hero() {
-  const [t, setT] = useState(getRemaining())
+  const [t, setT] = useState(getStatus())
   const { variables } = useFlag('festival_homepage_hero', {
     show_countdown: true,
     headline: 'The OMR Festival is about to land.',
@@ -24,11 +29,17 @@ export default function Hero() {
   })
 
   useEffect(() => {
-    const id = setInterval(() => setT(getRemaining()), 1000)
+    const id = setInterval(() => setT(getStatus()), 1000)
     return () => clearInterval(id)
   }, [])
 
-  const headlineWords = variables.headline.split(' ')
+  const phaseHeadline =
+    t.phase === 'live'
+      ? 'The OMR Festival is live in Hamburg.'
+      : t.phase === 'ended'
+        ? 'OMR26 is a wrap. See you at OMR27.'
+        : variables.headline
+  const headlineWords = phaseHeadline.split(' ')
   const lastWord = headlineWords.pop()
   const headlineLead = headlineWords.join(' ')
 
@@ -57,16 +68,48 @@ export default function Hero() {
         </div>
         {variables.show_countdown && (
           <div className="countdown-card">
-            <div className="countdown-label">OMR26 Festival · Hamburg</div>
+            <div className="countdown-label">
+              {t.phase === 'live' ? (
+                <>
+                  <span className="live-dot" /> OMR26 Festival · Live in Hamburg
+                </>
+              ) : (
+                'OMR26 Festival · Hamburg'
+              )}
+            </div>
             <div className="countdown-title">
               May 5 — 6, <span>2026</span>
             </div>
-            <div className="countdown-grid">
-              <Cell num={t.days} unit="Days" />
-              <Cell num={t.hours} unit="Hours" />
-              <Cell num={t.minutes} unit="Mins" />
-              <Cell num={t.seconds} unit="Secs" />
-            </div>
+            {t.phase === 'upcoming' && (
+              <div className="countdown-grid">
+                <Cell num={t.days} unit="Days" />
+                <Cell num={t.hours} unit="Hours" />
+                <Cell num={t.minutes} unit="Mins" />
+                <Cell num={t.seconds} unit="Secs" />
+              </div>
+            )}
+            {t.phase === 'live' && (
+              <div className="countdown-live">
+                <div className="countdown-live-eyebrow">Happening now</div>
+                <div className="countdown-live-title">
+                  The festival floor is open
+                </div>
+                <p className="countdown-live-sub">
+                  Join 70,000+ attendees across stages, masterclasses, and the
+                  expo. Livestream and on-site check-in are live.
+                </p>
+              </div>
+            )}
+            {t.phase === 'ended' && (
+              <div className="countdown-live">
+                <div className="countdown-live-eyebrow">That's a wrap</div>
+                <div className="countdown-live-title">See you at OMR27</div>
+                <p className="countdown-live-sub">
+                  Catch up with session recordings and highlights from this
+                  year's edition.
+                </p>
+              </div>
+            )}
             <div className="countdown-meta">
               <span>Messehallen Hamburg</span>
               <strong>70,000+ attendees</strong>
